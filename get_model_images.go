@@ -82,7 +82,7 @@ func saveImage(name, url string, i int) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	imageName := fmt.Sprintf("/Users/uminoshohei/Project/go/src/github.com/UminoShohei/get_model_images/hoge/%s_%d.jpg", name, i)
+	imageName := fmt.Sprintf("/Users/uminoshohei/Project/go/src/github.com/UminoShohei/get_model_images/vivi/%s_%d.jpg", name, i)
 	defer response.Body.Close()
 	file, err := os.Create(imageName)
 	if err != nil {
