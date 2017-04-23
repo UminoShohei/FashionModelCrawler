@@ -11,6 +11,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+var dir = ""
+
 func main() {
 	readCSV()
 
@@ -31,6 +33,7 @@ func readCSV() {
 	reader := csv.NewReader(fp)
 	reader.Comma = ','
 	reader.LazyQuotes = true // ダブルクオートを厳密にチェックしない！
+	cnt := 0
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
@@ -38,9 +41,12 @@ func readCSV() {
 		} else if err != nil {
 			panic(err)
 		}
-
+		if cnt == 0 {
+			dir = record[0]
+			cnt++
+		}
 		j := 1
-		for i := 1; i < 20; i++ {
+		for i := 1; i < 13; i++ {
 			doc, err := goquery.NewDocumentFromResponse(getImages(record[0], record[1], i))
 			fmt.Println(doc.Url)
 			if err != nil {
@@ -82,7 +88,7 @@ func saveImage(name, url string, i int) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	imageName := fmt.Sprintf("/Users/uminoshohei/Project/go/src/github.com/UminoShohei/get_model_images/vivi/%s_%d.jpg", name, i)
+	imageName := fmt.Sprintf("/Users/uminoshohei/Project/go/src/github.com/UminoShohei/get_model_images/%s/%s_%d.jpg", dir, name, i)
 	defer response.Body.Close()
 	file, err := os.Create(imageName)
 	if err != nil {
