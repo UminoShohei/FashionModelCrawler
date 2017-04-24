@@ -77,12 +77,6 @@ func saveImage(name, url string, i int) {
 	if strings.Compare(url, "/img/loading.gif") == 0 {
 		return
 	}
-	defer func() {
-		err := recover()
-		if err != nil {
-			fmt.Println("Recover!:", err)
-		}
-	}()
 	response, err := http.Get(url)
 	fmt.Println(i)
 	if err != nil {
